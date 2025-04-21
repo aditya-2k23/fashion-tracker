@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fashion Event Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-tshirt"></i>
+                <span>Fashion Event Tracker</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Events</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="landing" id="landing">
+        <h1>Discover Fashion Events Worldwide</h1>
+        <p>Find fashion shows, exhibitions, pop-ups, and industry events tailored to your interests and location with
+            our AI-powered assistant.</p>
+        <button class="btn" id="try-now-btn">Try Now</button>
+    </section>
+
+    <div class="container app-container" id="app-container">
+        <div class="chatbot-container">
+            <div class="chat-header">
+                <i class="fas fa-robot"></i>
+                <h2>Fashion Event Assistant</h2>
+            </div>
+            <div class="chat-messages" id="chat-messages">
+                <div class="message bot-message">
+                    Hello! I'm your fashion event assistant. I can help you find fashion events in specific locations.
+                    For example, try asking "What fashion events are happening in New York next month?" or "Are there
+                    any fashion pop-ups in Paris this weekend?"
+                </div>
+            </div>
+            <div class="chat-input">
+                <input type="text" id="user-input" placeholder="Type your message here..." />
+                <button id="send-btn">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
