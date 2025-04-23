@@ -283,7 +283,6 @@ document.addEventListener("DOMContentLoaded", function () {
         // We have events, create HTML for them
         const eventsHTML = createEventCards(events);
         return {
-          text: `I found ${events.length} fashion events that might interest you:`,
           html: eventsHTML,
         };
       } else {

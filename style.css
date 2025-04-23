@@ -47,6 +47,7 @@ header {
     font-weight: bold;
     display: flex;
     align-items: center;
+    cursor: pointer;
 }
 
 .logo i {
@@ -265,7 +266,7 @@ nav ul li a:hover {
 
 .typing-indicator {
     display: flex;
-    padding: 10px 0;
+    padding: 10px;
 }
 
 .typing-indicator span {
@@ -298,14 +299,6 @@ nav ul li a:hover {
     100% {
         opacity: 0.2;
     }
-}
-
-.footer {
-    text-align: center;
-    padding: 20px;
-    background-color: var(--dark-surface);
-    color: var(--text-secondary);
-    margin-top: 30px;
 }
 
 @media (max-width: 768px) {
