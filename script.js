@@ -5,9 +5,24 @@ document.addEventListener("DOMContentLoaded", function () {
   const tryNowBtn = document.getElementById("try-now-btn");
   const landingSection = document.getElementById("landing");
   const appContainer = document.getElementById("app-container");
+  const homeBtn = document.getElementById("home-btn");
+  const aboutBtn = document.getElementById("about-btn");
+  const aboutModal = document.getElementById("about-modal");
+  const closeModal = document.querySelector(".close-modal");
 
   // Add landing page transition
   tryNowBtn.addEventListener("click", function () {
+    showChatInterface();
+  });
+
+  // Home button functionality
+  homeBtn.addEventListener("click", function (e) {
+    e.preventDefault();
+    showLandingPage();
+  });
+
+  // Show chat interface
+  function showChatInterface() {
     landingSection.style.height = "0";
     landingSection.style.overflow = "hidden";
     landingSection.style.opacity = "0";
@@ -21,58 +36,39 @@ document.addEventListener("DOMContentLoaded", function () {
       appContainer.scrollIntoView({ behavior: "smooth" });
       userInput.focus();
     }, 100);
+  }
+
+  // Show landing page
+  function showLandingPage() {
+    // Reset landing section
+    landingSection.style.height = "77vh";
+    landingSection.style.overflow = "visible";
+    landingSection.style.opacity = "1";
+
+    // Hide app container
+    appContainer.classList.remove("visible");
+
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  // About modal functionality
+  aboutBtn.addEventListener("click", function (e) {
+    e.preventDefault();
+    aboutModal.style.display = "block";
   });
 
-  // Sample event data as fallback
-  const sampleEvents = {
-    "New York": [
-      {
-        name: "Spring Fashion Week",
-        date: "May 15-20, 2025",
-        location: "New York City",
-        description:
-          "Showcasing the latest spring collections from top designers.",
-        tags: ["runway", "designers", "spring collection"],
-      },
-      {
-        name: "Sustainable Fashion Expo",
-        date: "June 3-5, 2025",
-        location: "Brooklyn",
-        description:
-          "Highlighting sustainable and ethical fashion innovations.",
-        tags: ["sustainable", "ethical", "eco-friendly"],
-      },
-    ],
-    London: [
-      {
-        name: "London Fashion Week Festival",
-        date: "May 25-27, 2025",
-        location: "Central London",
-        description:
-          "Public fashion festival featuring runway shows and pop-up shops.",
-        tags: ["festival", "runway", "shopping"],
-      },
-    ],
-    Paris: [
-      {
-        name: "Paris Haute Couture Week",
-        date: "July 2-6, 2025",
-        location: "Paris",
-        description:
-          "Exclusive haute couture presentations from leading fashion houses.",
-        tags: ["haute couture", "luxury", "exclusive"],
-      },
-    ],
-    Milan: [
-      {
-        name: "Milano Moda",
-        date: "June 18-22, 2025",
-        location: "Milan Fashion District",
-        description: "Italian fashion showcase featuring renowned designers.",
-        tags: ["Italian fashion", "luxury", "designers"],
-      },
-    ],
-  };
+  // Close modal when clicking X
+  closeModal.addEventListener("click", function () {
+    aboutModal.style.display = "none";
+  });
+
+  // Close modal when clicking outside
+  window.addEventListener("click", function (e) {
+    if (e.target === aboutModal) {
+      aboutModal.style.display = "none";
+    }
+  });
 
   // Function to add a message to the chat
   function addMessage(message, sender) {
@@ -104,7 +100,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // Function to create event cards
+  // Function to create event cards - enhanced design
   function createEventCards(events) {
     let html = "";
     events.forEach((event) => {
@@ -283,6 +279,8 @@ document.addEventListener("DOMContentLoaded", function () {
         // We have events, create HTML for them
         const eventsHTML = createEventCards(events);
         return {
+          // Changed to empty string to remove the text container
+          text: "",
           html: eventsHTML,
         };
       } else {
@@ -297,26 +295,69 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // Fallback to mock data if API call fails
       const lowercaseMsg = message.toLowerCase();
-      const locations = Object.keys(sampleEvents);
+      const locations = Object.keys(sampleEvents || {});
       const foundLocation = locations.find((location) =>
         lowercaseMsg.includes(location.toLowerCase())
       );
 
-      if (foundLocation && sampleEvents[foundLocation]) {
+      if (foundLocation && sampleEvents && sampleEvents[foundLocation]) {
         const events = sampleEvents[foundLocation];
         const eventsHTML = createEventCards(events);
         return {
-          text: `I had trouble connecting to the API, but I found ${events.length} fashion events in ${foundLocation} from my local database:`,
+          // Changed to empty string to remove the text container
+          text: "",
           html: eventsHTML,
         };
       } else {
         return {
-          text: "I encountered an error connecting to the Gemini API. Please try again later. In the meantime, I can help you find fashion events in New York, London, Paris, or Milan using my local database.",
+          text: "I encountered an error connecting to the Gemini API. Please try again later. In the meantime, I can help you find fashion events in New York, London, Paris, Milan, or Mumbai using my local database.",
           html: "",
         };
       }
     }
   }
+
+  // Sample events data for fallback
+  const sampleEvents = {
+    "New York": [
+      {
+        name: "NYC Fashion Week Spring Collection",
+        date: "May 15-22, 2025",
+        location: "Manhattan Fashion Center, NY",
+        description:
+          "Annual showcase of the latest spring collections from top designers and emerging talents.",
+        tags: ["runway", "high fashion", "designers"],
+      },
+      {
+        name: "Sustainable Fashion Expo",
+        date: "May 28-30, 2025",
+        location: "Brooklyn Exhibition Hall",
+        description:
+          "Exhibition focused on sustainable and eco-friendly fashion innovations and brands.",
+        tags: ["sustainable", "eco-friendly", "exhibition"],
+      },
+    ],
+    London: [
+      {
+        name: "London Fashion Summit",
+        date: "June 5-8, 2025",
+        location: "Royal Exhibition Centre",
+        description:
+          "Industry leaders gather to discuss future trends and innovations in the fashion world.",
+        tags: ["conference", "networking", "industry"],
+      },
+    ],
+    Paris: [
+      {
+        name: "Haute Couture Week Paris",
+        date: "May 20-26, 2025",
+        location: "Grand Palais, Paris",
+        description:
+          "Prestigious showcase of handcrafted high-end fashion designs from the world's most exclusive fashion houses.",
+        tags: ["haute couture", "luxury", "exclusive"],
+      },
+    ],
+  };
 
   // Function to handle user message
   async function handleUserMessage() {
@@ -335,8 +376,10 @@ document.addEventListener("DOMContentLoaded", function () {
       const response = await getGeminiResponse(message);
       removeTypingIndicator();
 
-      // Add bot text response
-      addMessage(response.text, "bot");
+      // Add bot text response (if any)
+      if (response.text) {
+        addMessage(response.text, "bot");
+      }
 
       // If there's HTML content (events), add it
       if (response.html) {
@@ -345,6 +388,14 @@ document.addEventListener("DOMContentLoaded", function () {
         eventsDiv.innerHTML = response.html;
         chatMessages.appendChild(eventsDiv);
         chatMessages.scrollTop = chatMessages.scrollHeight;
+      }
+
+      // If both text and HTML are empty, show a generic message
+      if (!response.text && !response.html) {
+        addMessage(
+          "I couldn't find any fashion events matching your criteria. Please try another location or event type.",
+          "bot"
+        );
       }
     } catch (error) {
       removeTypingIndicator();
