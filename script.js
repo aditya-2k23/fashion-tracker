@@ -241,7 +241,7 @@ document.addEventListener("DOMContentLoaded", function () {
               },
             ],
             generationConfig: {
-              temperature: 0.4,
+              temperature: 2,
               topK: 32,
               topP: 1,
               maxOutputTokens: 1024,
@@ -316,48 +316,6 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     }
   }
-
-  // Sample events data for fallback
-  const sampleEvents = {
-    "New York": [
-      {
-        name: "NYC Fashion Week Spring Collection",
-        date: "May 15-22, 2025",
-        location: "Manhattan Fashion Center, NY",
-        description:
-          "Annual showcase of the latest spring collections from top designers and emerging talents.",
-        tags: ["runway", "high fashion", "designers"],
-      },
-      {
-        name: "Sustainable Fashion Expo",
-        date: "May 28-30, 2025",
-        location: "Brooklyn Exhibition Hall",
-        description:
-          "Exhibition focused on sustainable and eco-friendly fashion innovations and brands.",
-        tags: ["sustainable", "eco-friendly", "exhibition"],
-      },
-    ],
-    London: [
-      {
-        name: "London Fashion Summit",
-        date: "June 5-8, 2025",
-        location: "Royal Exhibition Centre",
-        description:
-          "Industry leaders gather to discuss future trends and innovations in the fashion world.",
-        tags: ["conference", "networking", "industry"],
-      },
-    ],
-    Paris: [
-      {
-        name: "Haute Couture Week Paris",
-        date: "May 20-26, 2025",
-        location: "Grand Palais, Paris",
-        description:
-          "Prestigious showcase of handcrafted high-end fashion designs from the world's most exclusive fashion houses.",
-        tags: ["haute couture", "luxury", "exclusive"],
-      },
-    ],
-  };
 
   // Function to handle user message
   async function handleUserMessage() {
