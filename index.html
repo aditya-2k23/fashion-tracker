@@ -15,12 +15,10 @@
                 <i class="fas fa-tshirt"></i>
                 <span>Fashion Event Tracker</span>
             </div>
-            <nav>
+            <nav class="navbar">
                 <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">Events</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Contact</a></li>
+                    <li><a href="#" id="home-btn"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="#" id="about-btn"><i class="fas fa-info-circle"></i> About</a></li>
                 </ul>
             </nav>
         </div>
@@ -49,6 +47,48 @@
             <div class="chat-input">
                 <input type="text" id="user-input" placeholder="Type your message here..." />
                 <button id="send-btn">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Modal -->
+    <div id="about-modal" class="modal" style="cursor: default;">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>About Our Team</h2>
+            <div class="team-container">
+                <div class="team-member">
+                    <div class="member-avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <h3>Aditya</h3>
+                    <p class="member-role">Lead Developer</p>
+                    <p class="member-bio">Alex specializes in frontend development with expertise in creating responsive
+                        and user-friendly interfaces. Passionate about combining technology with fashion.</p>
+                </div>
+
+                <div class="team-member">
+                    <div class="member-avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <h3>Sakshi Sood</h3>
+                    <p class="member-role">Applied AI integration</p>
+                    <p class="member-bio">Sam brings a creative eye to the team with extensive experience in design
+                        thinking and user experience. Previously worked with major fashion brands on digital
+                        experiences.</p>
+                </div>
+
+                <div class="team-member">
+                    <div class="member-avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <h3>Utkarsh Pandey</h3>
+                    <p class="member-role">Web Interface Developer
+                    </p>
+                    <p class="member-bio">Taylor focuses on the integration of AI technologies to enhance the fashion
+                        event discovery experience. Has a background in both computer science and fashion merchandising.
+                    </p>
+                </div>
             </div>
         </div>
     </div>
