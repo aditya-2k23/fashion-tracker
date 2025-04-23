@@ -226,7 +226,7 @@ nav ul li a:hover {
     background-color: var(--dark-surface);
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    padding: 15px;
+    padding: 10px;
     margin: 15px 0;
     transition: transform 0.3s ease;
     border: 1px solid #333;
@@ -270,7 +270,7 @@ nav ul li a:hover {
 
 .typing-indicator {
     display: flex;
-    padding: 10px 0;
+    padding: 10px 6px;
 }
 
 .typing-indicator span {

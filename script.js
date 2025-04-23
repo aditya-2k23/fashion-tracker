@@ -10,6 +10,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const aboutModal = document.getElementById("about-modal");
   const closeModal = document.querySelector(".close-modal");
 
+  const GEMINI_API_KEY = CONFIG.GEMINI_API_KEY;
+
   // Add landing page transition
   tryNowBtn.addEventListener("click", function () {
     showChatInterface();
@@ -237,7 +239,7 @@ document.addEventListener("DOMContentLoaded", function () {
             `;
 
       const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyC_vUEKXfRNZJUbuA4u7QOq8R9LGymwOdI`,
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`,
         {
           method: "POST",
           headers: {
