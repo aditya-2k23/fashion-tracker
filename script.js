@@ -77,7 +77,20 @@ document.addEventListener("DOMContentLoaded", function () {
     messageDiv.classList.add(
       sender === "user" ? "user-message" : "bot-message"
     );
-    messageDiv.textContent = message;
+
+    try {
+      // Try to parse JSON and convert to cards
+      const json = JSON.parse(message);
+      if (Array.isArray(json)) {
+        messageDiv.innerHTML = createEventCards(json);
+      } else {
+        messageDiv.textContent = message;
+      }
+    } catch {
+      // Not JSON, just treat as normal text
+      messageDiv.textContent = message;
+    }
+
     chatMessages.appendChild(messageDiv);
     chatMessages.scrollTop = chatMessages.scrollHeight;
   }
