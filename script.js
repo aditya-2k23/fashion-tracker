@@ -12,67 +12,54 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const GEMINI_API_KEY = CONFIG.GEMINI_API_KEY;
 
-  // Add landing page transition
   tryNowBtn.addEventListener("click", function () {
     showChatInterface();
   });
 
-  // Home button functionality
   homeBtn.addEventListener("click", function (e) {
     e.preventDefault();
     showLandingPage();
   });
 
-  // Show chat interface
   function showChatInterface() {
     landingSection.style.height = "0";
     landingSection.style.overflow = "hidden";
     landingSection.style.opacity = "0";
     landingSection.style.transition = "opacity 0.5s ease, height 0.8s ease";
 
-    // Show app container
     appContainer.classList.add("visible");
 
-    // Scroll to app container
     setTimeout(() => {
       appContainer.scrollIntoView({ behavior: "smooth" });
       userInput.focus();
     }, 100);
   }
 
-  // Show landing page
   function showLandingPage() {
-    // Reset landing section
     landingSection.style.height = "77vh";
     landingSection.style.overflow = "visible";
     landingSection.style.opacity = "1";
 
-    // Hide app container
     appContainer.classList.remove("visible");
 
-    // Scroll to top
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
-  // About modal functionality
   aboutBtn.addEventListener("click", function (e) {
     e.preventDefault();
     aboutModal.style.display = "block";
   });
 
-  // Close modal when clicking X
   closeModal.addEventListener("click", function () {
     aboutModal.style.display = "none";
   });
 
-  // Close modal when clicking outside
   window.addEventListener("click", function (e) {
     if (e.target === aboutModal) {
       aboutModal.style.display = "none";
     }
   });
 
-  // Function to add a message to the chat
   function addMessage(message, sender) {
     const messageDiv = document.createElement("div");
     messageDiv.classList.add("message");
@@ -81,7 +68,6 @@ document.addEventListener("DOMContentLoaded", function () {
     );
 
     try {
-      // Try to parse JSON and convert to cards
       const json = JSON.parse(message);
       if (Array.isArray(json)) {
         messageDiv.innerHTML = createEventCards(json);
@@ -89,7 +75,6 @@ document.addEventListener("DOMContentLoaded", function () {
         messageDiv.textContent = message;
       }
     } catch {
-      // Not JSON, just treat as normal text
       messageDiv.textContent = message;
     }
 
@@ -97,7 +82,6 @@ document.addEventListener("DOMContentLoaded", function () {
     chatMessages.scrollTop = chatMessages.scrollHeight;
   }
 
-  // Function to add typing indicator
   function showTypingIndicator() {
     const indicator = document.createElement("div");
     indicator.id = "typing-indicator";
@@ -107,7 +91,6 @@ document.addEventListener("DOMContentLoaded", function () {
     chatMessages.scrollTop = chatMessages.scrollHeight;
   }
 
-  // Function to remove typing indicator
   function removeTypingIndicator() {
     const indicator = document.getElementById("typing-indicator");
     if (indicator) {
@@ -115,7 +98,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // Function to create event cards - enhanced design
   function createEventCards(events) {
     let html = "";
     events.forEach((event) => {
@@ -139,10 +121,8 @@ document.addEventListener("DOMContentLoaded", function () {
     return html;
   }
 
-  // Extract events from response
   function extractEventsFromResponse(text) {
     try {
-      // Look for JSON-like structures in the text
       const jsonMatch = text.match(/\[[\s\S]*?\]/);
       if (jsonMatch) {
         try {
@@ -155,7 +135,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       }
 
-      // If no JSON found, try to parse structured text
       const events = [];
       const eventBlocks = text
         .split(/(?:Event|Fashion Event) \d+:/i)
@@ -172,12 +151,10 @@ document.addEventListener("DOMContentLoaded", function () {
             tags: [],
           };
 
-          // Extract name (usually first line)
           if (lines.length > 0) {
             event.name = lines[0].replace(/^Name:?\s*/i, "").trim();
           }
 
-          // Extract other details
           lines.forEach((line) => {
             if (line.match(/date:?\s*/i)) {
               event.date = line.replace(/date:?\s*/i, "").trim();
@@ -193,7 +170,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
           });
 
-          // If we have at least a name, add the event
           if (event.name) {
             events.push(event);
           }
@@ -207,7 +183,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // Function to handle Gemini API response
   async function getGeminiResponse(message) {
     try {
       const prompt = `
@@ -277,7 +252,6 @@ document.addEventListener("DOMContentLoaded", function () {
         };
       }
 
-      // Get the response text
       const responseText =
         data.candidates &&
         data.candidates[0] &&
@@ -287,19 +261,15 @@ document.addEventListener("DOMContentLoaded", function () {
           ? data.candidates[0].content.parts[0].text
           : "No response received from the API.";
 
-      // Extract events from the response
       const events = extractEventsFromResponse(responseText);
 
       if (events && events.length > 0) {
-        // We have events, create HTML for them
         const eventsHTML = createEventCards(events);
         return {
-          // Changed to empty string to remove the text container
           text: "",
           html: eventsHTML,
         };
       } else {
-        // Just return the text response
         return {
           text: responseText,
           html: "",
@@ -308,7 +278,6 @@ document.addEventListener("DOMContentLoaded", function () {
     } catch (error) {
       console.error("Error calling Gemini API:", error);
 
-      // Fallback to mock data if API call fails
       const lowercaseMsg = message.toLowerCase();
       const locations = Object.keys(sampleEvents || {});
       const foundLocation = locations.find((location) =>
@@ -319,7 +288,6 @@ document.addEventListener("DOMContentLoaded", function () {
         const events = sampleEvents[foundLocation];
         const eventsHTML = createEventCards(events);
         return {
-          // Changed to empty string to remove the text container
           text: "",
           html: eventsHTML,
         };
@@ -332,29 +300,23 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // Function to handle user message
   async function handleUserMessage() {
     const message = userInput.value.trim();
     if (message === "") return;
 
-    // Add user message to chat
     addMessage(message, "user");
     userInput.value = "";
 
-    // Show typing indicator
     showTypingIndicator();
 
-    // Get response from Gemini API
     try {
       const response = await getGeminiResponse(message);
       removeTypingIndicator();
 
-      // Add bot text response (if any)
       if (response.text) {
         addMessage(response.text, "bot");
       }
 
-      // If there's HTML content (events), add it
       if (response.html) {
         const eventsDiv = document.createElement("div");
         eventsDiv.classList.add("message", "bot-message");
@@ -363,7 +325,6 @@ document.addEventListener("DOMContentLoaded", function () {
         chatMessages.scrollTop = chatMessages.scrollHeight;
       }
 
-      // If both text and HTML are empty, show a generic message
       if (!response.text && !response.html) {
         addMessage(
           "I couldn't find any fashion events matching your criteria. Please try another location or event type.",
@@ -379,7 +340,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // Event listeners
   sendBtn.addEventListener("click", handleUserMessage);
   userInput.addEventListener("keypress", function (e) {
     if (e.key === "Enter") {
